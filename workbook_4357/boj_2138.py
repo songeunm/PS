@@ -1,8 +1,7 @@
 import sys
-from itertools import combinations
+from copy import deepcopy
 
 input = sys.stdin.readline
-sys.setrecursionlimit(100000)
 
 # greedy algorithm
 
@@ -15,31 +14,23 @@ def switch(now: list, switch_idx: int):
         now[switch_idx+1] = on_off(now[switch_idx+1])
     return now
 
-def bulb(now: list, target: list, times: int, idx: int, button: list):
+def bulb(now, target):
     N = len(now)
+    times = 0
 
-    if ''.join(now) == ''.join(target):
-#        print(button)
-        return times
-    elif idx >= N:
-        return -1
-    else:
-        if idx==0:
-            res1 = bulb(now, target, times, idx+1, button) # no switch
-            if res1 != -1:
-                return res1
-            res2 = bulb(switch(now, idx), target, times+1, idx+1, button+[idx]) # switch
-            switch(now, idx)
-            if res2 != -1:
-                return res2
+#    print(f"now: {now}")
+    for i in range(1,N):
+        if now[i-1] != target[i-1]:
+            switch(now, i)
+            times += 1
         else:
-            if now[idx-1] == target[idx-1]:
-                res = bulb(now, target, times, idx+1, button) # no switch
-            else:
-                res = bulb(switch(now, idx), target, times+1, idx+1, button+[idx]) # switch
-                switch(now, idx)
+            pass
+#        print(f"now: {now}, target: {target}")
     
-    return res
+    if ''.join(now) == ''.join(target):
+        return times
+    else:
+        return float('inf')
 
 
 if __name__ == "__main__":
@@ -47,4 +38,12 @@ if __name__ == "__main__":
     now = list(input().rstrip())
     target = list(input().rstrip())
 
-    print(bulb(now, target, 0, 0, []))
+    now1 = deepcopy(now)
+    res1 = bulb(now1, target) # dont push 1st switch
+    now2 = deepcopy(now)
+    res2 = bulb(switch(now2, 0), target) + 1 # push 1st switch
+    res = min(res1, res2)
+    if res == float('inf'):
+        print(-1)
+    else:
+        print(res)
