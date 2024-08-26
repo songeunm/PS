@@ -21,8 +21,7 @@ FROM (SELECT emp_no, CASE
             WHEN avg(score) >= 80 THEN "B"
             ELSE "C"
         END AS "GRADE"
-    FROM hr_employees AS e LEFT JOIN hr_grade AS g
-    USING (EMP_NO)
+    FROM HR_GRADE
     GROUP BY 1) AS ADD_GRADE LEFT JOIN HR_EMPLOYEES
 USING (EMP_NO)
 ORDER BY 1
