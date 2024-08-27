@@ -54,7 +54,6 @@ def bfs (Map: list, visit: list, sx: int, sy: int, room_number: int):
 def castle (Map: list, visit: list, N: int, M: int):
     room_number = 1
     room_size = {}
-    room_connection = {}
     sx, sy = 0, 0
     q = deque([(0, sx, sy)])
     max_size = 0
