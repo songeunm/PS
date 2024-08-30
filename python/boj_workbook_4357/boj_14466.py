@@ -13,7 +13,7 @@ input = sys.stdin.readline
 def bfs(sx: int, sy: int, Map:list, visit: list):
     q = deque([(sx, sy)])
     visit[sx][sy] = 1
-    N = len(visit)
+    n = len(visit)
     count = 0
 
     dir_x = [ 0,-1, 0, 1]
@@ -26,10 +26,12 @@ def bfs(sx: int, sy: int, Map:list, visit: list):
         for i in range(4):
             nx = x + dir_x[i]
             ny = y + dir_y[i]
-            if nx<0 or ny<0 or nx>=N or ny>=N:
+            if nx<0 or ny<0 or nx>=n or ny>=n:
                 continue
             if Map[nx][ny] == 1: # road
                 continue
+            nx += dir_x[i]
+            ny += dir_y[i]
             if not visit[nx][ny]:
                 q.append((nx, ny))
                 visit[nx][ny] = 1
@@ -39,9 +41,9 @@ def cows(Map: list, N: int):
     visit = [[0 for i in range(N*2-1)] for j in range(N*2-1)]
     cow_group = []
 
-    for i in range(N*2-1):
-        for j in range(N*2-1):
-            if Map[i][j] != 1 and visit[i][j] == 0:
+    for i in range(0, N*2-1, 2):
+        for j in range(0, N*2-1, 2):
+            if visit[i][j] == 0:
                 cow_group.append( bfs(i, j, Map, visit) )
     #print("visit:")
     #pprint(visit)
