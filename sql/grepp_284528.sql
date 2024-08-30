@@ -1,7 +1,7 @@
-"""
+/*
 연간 평가점수에 해당하는 평가 등급 및 성과금 조회하기
 GROUP BY
-"""
+*/
 
 -- 사번(HR_EMPLOYEES.EMP_NO/HR_GRADE.EMP_NO)
 -- 성명(HR_EMPLOYEES.EMP_NAME)
