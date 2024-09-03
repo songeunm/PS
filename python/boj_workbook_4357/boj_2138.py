@@ -1,3 +1,8 @@
+"""
+전구와 스위치
+greedy
+"""
+
 import sys
 from copy import deepcopy
 

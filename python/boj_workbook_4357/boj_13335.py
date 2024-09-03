@@ -1,3 +1,8 @@
+"""
+트럭
+구현, 자료구조, 시뮬레이션, 큐
+"""
+
 import sys
 from collections import deque
 from time import sleep
