@@ -54,6 +54,3 @@ def solution(points, routes):
         answer += len(conflict)
 #        print(f"answer: {answer}")
     return answer
-
-solution([[3, 2], [6, 4], [4, 7], [1, 4]], [[4, 2], [1, 3], [4, 2], [4, 3]])
-#solution([[3, 2], [6, 4], [4, 7], [1, 4]], [[4, 2], [1, 3], [2, 4]])
