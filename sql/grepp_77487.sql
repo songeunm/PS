@@ -1,0 +1,15 @@
+/*
+헤비 유저가 소유한 장소
+SELECT
+2021 Dev-Matching: 웹 백엔드 개발자(상반기)
+*/
+
+SELECT *
+FROM PLACES
+WHERE HOST_ID IN (
+    SELECT HOST_ID
+    FROM PLACES
+    GROUP BY HOST_ID
+    HAVING COUNT(ID) > 1
+)
+ORDER BY ID;
