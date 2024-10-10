@@ -4,39 +4,20 @@
 import sys
 input = sys.stdin.readline
 
-def dfs(s: int, g: list, check: list, res: list):
-    st = [s]
-    conn = {s}
-
-    while st:
-        x = st.pop()
-        print(f"x: {x}")
-        check[x] = 1
-        for i, n in enumerate(g[x]):
-            print(f"n: {i} {n}")
-            if not n:
-                continue
-            if i == s:
-                res[i][i] = 1
-                continue
-            print(f"pushed")
-            st.append(i)
-            for c in conn:
-                res[c][i] = 1
-            conn.add(i)
-        print(f"st: {st}")
-        print(f"conn: {conn}")
-        print(f"res: {res}")
+def fw(g):
+    l = len(g)
+    for i in range(l):
+        # print(i)
+        for x in range(l):
+            for y in range(l):
+                g[x][y] = (g[x][y]) or (g[x][i] and g[i][y])
+        # print(g)
 
 
 if __name__ == "__main__":
     n = int(input())
     g = [list(map(int, input().split())) for i in range(n)]
 
-    res = [[0 for i in range(n)] for j in range(n)]
-    check = [0 for i in range(n)]
-
-    for i in range(n):
-        if not check[i]:
-            print(f"--- start dfs with {i}")
-            dfs(i, g, check, res)
+    fw(g)
+    for res in g:
+        print(*res)
