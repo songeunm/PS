@@ -1,0 +1,25 @@
+WITH fee_and_days AS (
+SELECT
+    history_id,
+    daily_fee,
+    datediff(end_date, start_date) + 1 days
+FROM car_rental_company_rental_history h
+JOIN car_rental_company_car c ON h.car_id = c.car_id
+AND car_type = "트럭"
+), fee_and_days_and_discount AS (
+SELECT *,
+    CASE WHEN days >= 90
+    THEN (SELECT discount_rate FROM car_rental_company_discount_plan WHERE car_type="트럭" AND duration_type = "90일 이상")
+    WHEN days >= 30
+    THEN (SELECT discount_rate FROM car_rental_company_discount_plan WHERE car_type="트럭" AND duration_type = "30일 이상")
+    WHEN days >= 7
+    THEN (SELECT discount_rate FROM car_rental_company_discount_plan WHERE car_type="트럭" AND duration_type = "7일 이상")
+    ELSE 0 END as discount
+FROM fee_and_days
+)
+
+SELECT
+    history_id,
+    round(daily_fee * days * (100-discount) / 100) fee
+FROM fee_and_days_and_discount
+ORDER BY 2 DESC, 1 DESC;
