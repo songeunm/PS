@@ -26,7 +26,7 @@ def move_character(grid, q):
         if grid[x][y] == "#":
             # print("벽과 부딪침")
             continue
-        if (x, y) == (7, 7):
+        if (x, y) == (0, 7):
             # print("도착")
             return False, []
         for d in range(9):
